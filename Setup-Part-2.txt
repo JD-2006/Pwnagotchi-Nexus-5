@@ -139,3 +139,8 @@ source /system/xbin/monstart-nh
 source /system/xbin/monstop-nh
 and testing with LD_PRELOAD=/system/lib/libnexmonkali.so airodump-ng wlan0
 to get it going. Not sure why it does not always work right away even after reboots.
+
+
+-- For a phone I use a modified 'inky.py' to enlarge the ui. I changed W to 450 and H to 500. Change config.toml to inky.
+/usr/local/lib/python3.9/dist-packages/pwnagotchi/ui/hw
+Then spent a couple hours adjusting in tweakview plugin lol.
