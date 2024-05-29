@@ -92,3 +92,4 @@ apt-get upgrade
 <br />
 <br />
 -- To continue use the accompanying text file as this is long enough and it was already created. Thanks.
+https://github.com/JD-2006/Pwnagotchi-Nexus-5/blob/main/Setup-Part-2.txt
