@@ -137,12 +137,14 @@ main.plugins.gpsdeasy.bettercap = true
 -- For GPS
 Install BlueNmea apk
 Open and start
-Open kali shell in terminal and enter command 
+-- Open kali shell in terminal and enter command 
 gpsd -N -n -D5 tcp://localhost:4352
 
 -- Open a second terminal window
 source /system/xbin/monstop-nh
 LD_PRELOAD=/lib/libnexmonkali.so servicectl restart bettercap
+
+ - If using gps it may take a few minutes to show coordinates. It might show a bunch of zero's to start off.
 
 As a test to see if working correctly run..
 LD_PRELOAD=/system/lib/libnexmonkali.so airodump-ng wlan0
