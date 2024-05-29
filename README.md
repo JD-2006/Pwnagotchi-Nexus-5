@@ -1,7 +1,9 @@
 The primary goal was to be able to use the internal wifi of the Nexus 5 to use Pwnagotchi and Nethunter.
 <br />
 <br />
-
+![alt text](https://github.com/JD-2006/Pwnagotchi-Nexus-5/blob/main/Screenshot_20240528-150814b.jpg?raw=true)
+<br />
+<br />
 There is the easy way:using the Nexus Root Toolkit https://www.wugfresh.com/nrt/
 
 There is the harder way:
