@@ -158,6 +158,7 @@ to get it going. Not sure why it does not always work right away even after rebo
 
 
 I tried to make a single bash script to run all these in one terminal but it no worky.
+In case you wanna mess with it. 
 
 
 -- For a phone I use a modified 'inky.py' to enlarge the ui. I changed W to 450 and H to 500. Change config.toml to inky.
