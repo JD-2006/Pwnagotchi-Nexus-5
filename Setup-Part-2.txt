@@ -111,9 +111,24 @@ main.mon_stop_cmd = "source /system/xbin/monstop-nh"
 
 
 --- When ready to start using ---
+AI is not working. I disabled pwngrid but may work for you.
+I had issues getting GPS to work with plugins.
+I can use gpsd-easy plugin to get location and show on the screen as seen above, but i could not get other plugins to use the coordinates. Wardriver and tracker seemingly would not use gpsd. I also enabled default gps plugin and had it use an address instead of a serial port.
+I messed with sockets, services too so I prob got some wires crossed. :/ .
+Seemingly need BlueNmea apk to kickstart using system gps???
+
+main.plugins.gps.enabled = true
+main.plugins.gps.speed = 9600
+main.plugins.gps.device = "localhost:2947"
+
+main.plugins.gpsdeasy.enabled = true
+main.plugins.gpsdeasy.bettercap = true
+
 -- For GPS
+Install BlueNmea apk
+Open and start
 Open kali shell in terminal and enter command 
-gpsd -N -n -D5 tcp://localhost:2947
+gpsd -N -n -D5 tcp://localhost:4352
 
 -- Open a second terminal window
 source /system/xbin/monstop-nh
@@ -130,7 +145,8 @@ source /system/xbin/monstop-nh
 source /system/xbin/monstop-nh
 LD_PRELOAD=/system/lib/libnexmonkali.so pwnagotchi
 
-I tried to make a single bash script to run all these in one terminal but it no worky.
+If you see it's blind ctrl+c and retry.
+[INFO] [epoch 1] duration=00:00:30 slept_for=00:00:30 blind=1
 
 I have had to use various combos of..
 pkill bettercap
@@ -139,6 +155,9 @@ source /system/xbin/monstart-nh
 source /system/xbin/monstop-nh
 and testing with LD_PRELOAD=/system/lib/libnexmonkali.so airodump-ng wlan0
 to get it going. Not sure why it does not always work right away even after reboots.
+
+
+I tried to make a single bash script to run all these in one terminal but it no worky.
 
 
 -- For a phone I use a modified 'inky.py' to enlarge the ui. I changed W to 450 and H to 500. Change config.toml to inky.
