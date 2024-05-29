@@ -1,0 +1,141 @@
+I deeply apologize for this package list salad. :(
+I was working on another project that required compiling and building packages in fits and starts and now not sure all are necessary.
+If some are not available it's ok.
+
+
+sudo apt-get install net-tools python3-dev libblas-dev liblapack-dev libeigen3-dev libatlas-base-dev make cmake
+sudo apt-get install python3-pip libjpeg-dev libopenblas-dev libopenmpi-dev libomp-dev dpkg-dev git unzip libnetfilter-queue-dev
+sudo apt-get install build-essential checkinstall libcurl4-openssl-dev libssh-dev
+sudo apt-get -y install gfortran libdbus-1-dev libdbus-glib-1-dev libcurl4-openssl-dev
+sudo apt-get -y install libopenmpi-dev libatlas-base-dev libopenblas-dev libblas-dev
+sudo apt-get -y install liblapack-dev libhdf5-dev libc-ares-dev libeigen3-dev
+sudo apt install golang git build-essential libpcap-dev libusb-1.0-0-dev libnetfilter-queue-dev
+
+I will include a created requirements.txt for the pip installs. Use..
+pip install -r requirements.txt --extra-index-url https://www.piwheels.org/simple
+
+
+wget "https://github.com/jayofelony/pwngrid/releases/download/v1.10.5/pwngrid-1.10.5-armhf.zip"
+unzip pwngrid-1.10.5-armhf.zip
+sudo mv pwngrid /usr/bin/
+sudo chmod 755 /usr/bin/pwngrid
+sudo chown root:root /usr/bin/pwngrid
+# generate the keypair
+sudo pwngrid -generate -keys /etc/pwnagotchi
+
+sudo nano /etc/systemd/system/pwngrid-peer.service
+[Unit]
+Description=pwngrid peer service.
+Documentation=https://pwnagotchi.ai
+Wants=network.target
+
+[Service]
+Type=simple
+PermissionsStartOnly=true
+ExecStart=/usr/bin/pwngrid -keys /etc/pwnagotchi -address 127.0.0.1:8666 -client-token /root/.api-enrollment.json -wait -log /var/log/pwngrid-peer.log -iface wlan0
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
+
+
+wget "https://github.com/jayofelony/pwnagotchi/archive/v2.8.9.zip"
+unzip v2.8.9.zip
+cd pwnagotchi-2.8.9
+
+-- Remove from requirements.txt & pyproject.toml
+torch
+torchvision
+stable_baselines3
+RPi.GPIO
+rpi_hardware_pwm
+
+sudo python3 -m pip install .
+
+
+sudo wget https://github.com/jayofelony/bettercap/releases/download/2.32.2/bettercap-2.32.2-armhf.zip
+sudo unzip bettercap-2.32.2-armhf.zip
+sudo mv bettercap /usr/bin/
+sudo chmod 755 /usr/bin/bettercap
+sudo chown root:root /usr/bin/bettercap
+sudo bettercap -eval "caplets.update; ui.update; quit"
+
+
+Clone the repo: git clone https://github.com/dracode/libnexmonkali
+Install dependencies: apt install libnl-3-dev
+Build: make
+Install: make install
+Copy to /lib as well
+
+
+-- Copy my versions from here and overwrite or edit
+
+
+
+wget https://github.com/smaknsk/servicectl/archive/1.0.tar.gz
+tar -xf 1.0.tar.gz -C /usr/local/lib/
+ln -s /usr/local/lib/servicectl-1.0/servicectl /usr/local/bin/servicectl
+ln -s /usr/local/lib/servicectl-1.0/serviced /usr/local/bin/serviced
+
+sudo servicectl action service
+Params:
+    action - can be {start, stop, restart, reload, enable, disable}
+    service - file name in folder /usr/lib/systemd/system/
+
+sudo chmod +X /usr/local/lib/servicectl-1.0/servicectl
+sudo chmod +X /usr/local/lib/servicectl-1.0/serviced
+
+-- sudo systemctl enable pwngrid-peer
+-- sudo systemctl enable bettercap
+-- sudo systemctl enable pwnagotchi
+
+
+-- Change wlan0mon to wlan0
+    '/usr/local/share/bettercap/caplets/pwnagotchi-auto.cap',
+    '/usr/local/share/bettercap/caplets/pwnagotchi-manual.cap',
+
+
+-- /etc/pwnagotchi/config.toml
+main.iface = "wlan0"
+main.mon_start_cmd = "source /system/xbin/monstart-nh"
+main.mon_stop_cmd = "source /system/xbin/monstop-nh"
+
+
+-- Change wlan0mon to wlan0
+    '/etc/systemd/system/pwngrid-peer.service'
+
+
+-- Change temperature c = int(temp / 1000) to c = int(temp)
+/usr/local/lib/python3.11/dist-packages/pwnagotchi/__init__.py
+
+
+--- When ready to start using ---
+-- For GPS
+Open kali shell in terminal and enter command 
+gpsd -N -n -D5 tcp://localhost:2947
+
+-- Open a second terminal window
+source /system/xbin/monstop-nh
+LD_PRELOAD=/lib/libnexmonkali.so servicectl restart bettercap
+
+As a test to see if working correctly run..
+LD_PRELOAD=/system/lib/libnexmonkali.so airodump-ng wlan0
+
+You should see networks and possibly clients connected to them.
+If it doesn't use..
+source /system/xbin/monstop-nh
+
+-- Open 3rd terminal window
+source /system/xbin/monstop-nh
+LD_PRELOAD=/system/lib/libnexmonkali.so pwnagotchi
+
+I tried to make a single bash script to run all these in one terminal but it no worky.
+
+I have had to use various combos of..
+pkill bettercap
+pkill pwnagotchi
+source /system/xbin/monstart-nh
+source /system/xbin/monstop-nh
+and testing with LD_PRELOAD=/system/lib/libnexmonkali.so airodump-ng wlan0
+to get it going. Not sure why it does not always work right away even after reboots.
