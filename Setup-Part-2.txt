@@ -120,7 +120,8 @@ fs.memory.mounts.log.zram = false
 fs.memory.mounts.data.zram = false
 
 I had issues getting GPS to work with plugins.
-I can use gpsd-easy plugin to get location and show on the screen as seen above, but i could not get other plugins to use the coordinates. Wardriver and tracker seemingly would not use gpsd. I also enabled default gps plugin and had it use an address instead of a serial port.
+I can use gpsd-easy plugin to get location and show on the screen as seen above, but i could not get other plugins to use the coordinates. webgpsmap and tracker seemingly would not use gpsd or default gps plugin with changed device. I also enabled default gps plugin and had it use an address instead of a serial port.
+* Update from the screenshot - wardriver shows networks and plots to it's map. Prob using the modified gps plugin.
 I messed with sockets, services too so I prob got some wires crossed. :/ .
 Seemingly need BlueNmea apk to kickstart using system gps???
 
